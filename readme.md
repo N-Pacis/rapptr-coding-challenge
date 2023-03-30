@@ -1,114 +1,104 @@
-# Todo App
+Rapptr Coding Challenge
+========
 
-## Setting up the app:
+This is a Node.js application built with Express.js and Prisma ORM. The app allows users to register, login, and create, update, delete and retrieve todos.
 
-1. Rename `.env.example` to `.env`
-2. Add appropriate Postgres connection URL in the `.env` file
+Setting up the app
+------------------
 
-## Running the app:
+1.  Rename `.env.example` to `.env`.
+2.  Add appropriate postgres connection url to the `.env` file.
 
-1. Run `npm install`
-2. Run `npx prisma migrate dev`
-3. Run `npm run dev`
+Running the app
+---------------
 
-## APIs:
+1.  Run `npm install` to install dependencies.
+2.  Run `npx prisma migrate dev` to run database migrations.
+3.  Run `npm run dev` to start the development server.
 
-1. Register user: 
+APIs
+----
 
-POST /users/register
+### User APIs
 
-Creates a new user with the given email and password.
+#### Register User
 
-Request Body:
+To register a new user, send a POST request to `/users/register`. The request body should contain `name`, `email`, and `password` fields.
 
-{
-"email": "user@example.com",
-"password": "secret"
-}
+javascriptCopy code
 
-2. Login user:
+`router.post("/users/register",(req,res)=>{
+  return userController.createUser(req,res)
+})`
 
-POST /users/login
+#### Login User
 
-Logs in a user with the given email and password and returns a JWT token.
+To login a user, send a POST request to `/users/login`. The request body should contain `email` and `password` fields.
 
-Request Body:
+javascriptCopy code
 
-{
-"email": "user@example.com",
-"password": "secret"
-}
+`router.post("/users/login",(req,res)=>{
+  return userController.login(req,res)
+})`
 
-3. Get user profile:
+#### Get User Profile
 
-GET /users/profile
+To get the user's profile, send a GET request to `/users/profile` with a valid `Authorization` header containing a JWT token.
 
-Returns the user's profile details.
+javascriptCopy code
 
-Authorization Header:
+`router.get("/users/profile",authMiddleware,(req,res)=>{
+  return userController.getProfile(req,res)
+})`
 
-Authorization: Bearer <token>
+### Todo APIs
 
-4. Create a new Todo:
+#### Create Todo
 
-POST /todos/create
+To create a new todo, send a POST request to `/todos/create`. The request body should contain `title` and `description` fields.
 
-Creates a new Todo item for the logged-in user.
+javascriptCopy code
 
-Request Body:
+`router.post("/todos/create",authMiddleware, (req,res)=>{
+  return todoController.createTodo(req,res)
+})`
 
-{
-"title": "Buy groceries",
-"description": "Milk, bread, eggs"
-}
+#### Update Todo
 
-Authorization Header:
+To update an existing todo, send a PUT request to `/todos/:id/update` with the todo ID as a URL parameter. The request body should contain `title` and `description` fields.
 
-Authorization: Bearer <token>
+javascriptCopy code
 
-5. Update a Todo:
+`router.put("/todos/:id/update",authMiddleware,(req,res)=>{
+  return todoController.updateTodo(req,res)
+})`
 
-PUT /todos/:id/update
+#### Get Todo
 
-Updates a Todo item with the given ID for the logged-in user.
+To get a single todo, send a GET request to `/todos/:id` with the todo ID as a URL parameter.
 
-Request Body:
+javascriptCopy code
 
-{
-"title": "Buy groceries",
-"description": "Milk, bread, eggs"
-}
+`router.get("/todos/:id",authMiddleware,(req,res)=>{
+  return todoController.getTodo(req,res)
+})`
 
-Authorization Header:
+#### Get All Todos
 
-Authorization: Bearer <token>
+To get all todos, send a GET request to `/todos`.
 
-6. Get a Todo:
+javascriptCopy code
 
-GET /todos/:id
+`router.get("/todos",authMiddleware,(req,res)=>{
+  return todoController.getTodos(req,res)
+})`
 
-Returns the details of a Todo item with the given ID for the logged-in user.
+#### Delete Todo
 
-Authorization Header:
+To delete a todo, send a DELETE request to `/todos/:id/delete` with the todo ID as a URL parameter.
 
-Authorization: Bearer <token>
+javascriptCopy code
 
-7. Get all Todos:
-
-GET /todos
-
-Returns a list of all Todo items for the logged-in user.
-
-Authorization Header:
-
-Authorization: Bearer <token>
-
-8. Delete a Todo:
-
-DELETE /todos/:id/delete
-
-Deletes a Todo item with the given ID for the logged-in user.
-
-Authorization Header:
-
-Authorization: Bearer <token>
+`router.delete("/todos/:id/delete",authMiddleware,(req,res)=>{
+  return todoController.deleteTodo(req,res)
+})`
