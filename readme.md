@@ -57,48 +57,18 @@ javascriptCopy code
 
 To create a new todo, send a POST request to `/todos/create`. The request body should contain `title` and `description` fields.
 
-javascriptCopy code
-
-`router.post("/todos/create",authMiddleware, (req,res)=>{
-  return todoController.createTodo(req,res)
-})`
-
 #### Update Todo
 
 To update an existing todo, send a PUT request to `/todos/:id/update` with the todo ID as a URL parameter. The request body should contain `title` and `description` fields.
-
-javascriptCopy code
-
-`router.put("/todos/:id/update",authMiddleware,(req,res)=>{
-  return todoController.updateTodo(req,res)
-})`
 
 #### Get Todo
 
 To get a single todo, send a GET request to `/todos/:id` with the todo ID as a URL parameter.
 
-javascriptCopy code
-
-`router.get("/todos/:id",authMiddleware,(req,res)=>{
-  return todoController.getTodo(req,res)
-})`
-
 #### Get All Todos
 
 To get all todos, send a GET request to `/todos`.
 
-javascriptCopy code
-
-`router.get("/todos",authMiddleware,(req,res)=>{
-  return todoController.getTodos(req,res)
-})`
-
 #### Delete Todo
 
 To delete a todo, send a DELETE request to `/todos/:id/delete` with the todo ID as a URL parameter.
-
-javascriptCopy code
-
-`router.delete("/todos/:id/delete",authMiddleware,(req,res)=>{
-  return todoController.deleteTodo(req,res)
-})`
