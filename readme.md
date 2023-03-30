@@ -25,31 +25,15 @@ APIs
 
 To register a new user, send a POST request to `/users/register`. The request body should contain `name`, `email`, and `password` fields.
 
-javascriptCopy code
-
-`router.post("/users/register",(req,res)=>{
-  return userController.createUser(req,res)
-})`
 
 #### Login User
 
 To login a user, send a POST request to `/users/login`. The request body should contain `email` and `password` fields.
 
-javascriptCopy code
-
-`router.post("/users/login",(req,res)=>{
-  return userController.login(req,res)
-})`
-
 #### Get User Profile
 
 To get the user's profile, send a GET request to `/users/profile` with a valid `Authorization` header containing a JWT token.
 
-javascriptCopy code
-
-`router.get("/users/profile",authMiddleware,(req,res)=>{
-  return userController.getProfile(req,res)
-})`
 
 ### Todo APIs
 
